@@ -42,8 +42,7 @@ def get_movies(start):
     return lists
 
 
-# 获取电影列表
-def movie(request):
+def saveMovie():
     with connection.cursor() as cursor:
         cursor.execute("DROP TABLE IF EXISTS mysqlconfig_movies")  # 删除数据库表
         createTab = """CREATE TABLE mysqlconfig_movies(
@@ -63,6 +62,10 @@ def movie(request):
         for movie in movies:
             movie.save()
         start += 25
+
+
+# 获取电影列表
+def movie(request):
     top_movies = Movies.objects.order_by('-score')[:10]
     return render(request, 'movie.html', {'movies': top_movies})
 
